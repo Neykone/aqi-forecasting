@@ -1,0 +1,18 @@
+# Dataset (non versionné)
+data/*.csv
+
+# Modèles entraînés
+models/*.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Système et éditeurs
+.DS_Store
+.vscode/
+.idea/
