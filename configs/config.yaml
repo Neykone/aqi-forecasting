@@ -1,0 +1,60 @@
+# Configuration du projet AQI Forecasting.
+# Tous les chemins, variables et hyperparametres sont regroupes ici.
+
+data:
+  raw_path: "data/city_day.csv"
+  city: "Delhi"
+  city_column: "City"
+  date_column: "Date"
+  target_column: "AQI"
+
+preprocessing:
+  # Strategie de traitement des valeurs manquantes : interpolate, ffill ou drop
+  missing_value_strategy: "interpolate"
+  # Nombre maximal de jours consecutifs manquants que l'on comble
+  max_gap: 3
+  # Polluants utilises comme variables explicatives
+  features:
+    - "PM2.5"
+    - "PM10"
+    - "NO2"
+    - "CO"
+    - "SO2"
+    - "O3"
+  # Decalages temporels ajoutes (valeurs des jours precedents)
+  lag_days: [1, 2, 3]
+  # Fenetres des moyennes glissantes
+  rolling_windows: [3, 7]
+
+split:
+  # Decoupage chronologique : les parts sont prises a la fin de la serie
+  test_size: 0.2
+  val_size: 0.1
+
+model:
+  # Modele utilise : linear, ridge, lasso, decision_tree, random_forest ou knn
+  type: "random_forest"
+  random_state: 42
+  # Nombre de decoupages pour la validation croisee temporelle
+  cv_splits: 5
+  # Espace de recherche des hyperparametres, par modele
+  hyperparameters:
+    ridge:
+      alpha: [0.1, 1.0, 10.0, 100.0]
+    lasso:
+      alpha: [0.01, 0.1, 1.0]
+    decision_tree:
+      max_depth: [3, 5, 10, null]
+      min_samples_leaf: [1, 5, 10]
+    random_forest:
+      n_estimators: [100, 200]
+      max_depth: [5, 10, null]
+      min_samples_leaf: [1, 5]
+    knn:
+      n_neighbors: [3, 5, 10]
+
+training:
+  model_output_path: "models/best_model.pkl"
+
+evaluation:
+  metrics: ["mae", "rmse", "r2"]
