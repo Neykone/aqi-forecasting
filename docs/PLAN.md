@@ -34,9 +34,74 @@ Si une signature doit changer, le signaler au groupe avant, parce que les autres
 
 ## Organisation Git
 
-- Une branche par partie plutôt que de travailler directement sur `main` : `git checkout -b <nom-de-la-branche>`
-- Pull Request vers `main`, relue par quelqu'un d'autre avant la fusion
-- Le dataset n'est pas versionné (voir `.gitignore`), chacun le télécharge en local
+La branche `main` est protégée : les push directs y sont refusés et toute modification passe par une Pull Request. Le dataset n'est pas versionné (voir `.gitignore`), chacun le télécharge en local.
+
+### Installation, une seule fois
+
+```bash
+git clone https://github.com/<utilisateur>/aqi-forecasting.git
+cd aqi-forecasting
+
+python -m venv .venv
+.venv\Scripts\activate          # macOS ou Linux : source .venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+Puis placer `city_day.csv` dans le dossier `data/`.
+
+### Travailler sur sa partie
+
+Créer sa branche depuis un `main` à jour :
+
+```bash
+git checkout main
+git pull
+git checkout -b preprocessing
+```
+
+Noms de branches suggérés : `data`, `preprocessing`, `modelisation`, `evaluation`.
+
+Enregistrer son travail, aussi souvent que voulu :
+
+```bash
+git add .
+git commit -m "Implement missing value handling"
+```
+
+Envoyer la branche sur GitHub :
+
+```bash
+git push -u origin preprocessing
+```
+
+Les fois suivantes, `git push` suffit.
+
+### Ouvrir la Pull Request
+
+Après le push, un bandeau apparaît sur la page du dépôt avec un bouton **Compare & pull request**. Sinon : onglet **Pull requests** puis **New pull request**, avec `main` à gauche et sa branche à droite.
+
+Décrire en deux lignes ce que la branche apporte, puis demander la relecture à quelqu'un du groupe. La fusion se fait avec le bouton **Merge pull request**, une fois la PR approuvée.
+
+### Récupérer le travail des autres
+
+Après chaque fusion dans `main`, remettre sa propre branche à jour pour éviter les conflits :
+
+```bash
+git checkout main
+git pull
+git checkout preprocessing
+git merge main
+```
+
+### En cas de conflit
+
+Git indique les fichiers concernés. Les ouvrir dans VS Code, choisir quoi garder entre les marqueurs `<<<<<<<` et `>>>>>>>`, puis :
+
+```bash
+git add .
+git commit
+```
 
 ## Plan du rapport attendu
 
