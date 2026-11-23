@@ -26,7 +26,7 @@ Si une signature doit changer, le signaler au groupe avant, parce que les autres
 | Partie | Fonctions à écrire |
 |--------|--------------------|
 | Données et exploration | `load_data`, `filter_city`, `sort_by_date`, `get_city_series` |
-| Preprocessing et représentation | `handle_missing_values`, `add_lag_features`, `add_rolling_features`, `build_target`, `build_feature_matrix`, `chronological_split` |
+| Preprocessing et représentation(kone) | `handle_missing_values`, `add_lag_features`, `add_rolling_features`, `build_target`, `build_feature_matrix`, `chronological_split` |
 | Modélisation | `get_model_and_grid`, `persistence_baseline`, `build_pipeline`, `train_model` |
 | Évaluation et résultats | `compute_metrics`, `print_metrics`, `compare_with_baseline` |
 
